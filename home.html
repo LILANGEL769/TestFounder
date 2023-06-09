@@ -2,9 +2,9 @@
 <html>
 <head>
   <title>Registration</title>
-  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
   <script>
     // Initialize Firebase
     var firebaseConfig = {
@@ -18,44 +18,97 @@
     };
     firebase.initializeApp(firebaseConfig);
   </script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 8px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-  <h1>Registration</h1>
-  
-  <form id="registration-form">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br>
-    
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br>
-    
-    <button type="submit">Register</button>
-  </form>
-  
+  <div class="container">
+    <h1>Registration</h1>
+    <div class="form-group">
+      <label for="emailInput">Email:</label>
+      <input type="email" id="emailInput" required>
+    </div>
+    <div class="form-group">
+      <label for="passwordInput">Password:</label>
+      <input type="password" id="passwordInput" required>
+    </div>
+    <div class="form-group">
+      <button type="submit" id="registerButton">Register</button>
+    </div>
+  </div>
+
   <script>
-    // Handle registration form submission
-    document.getElementById("registration-form").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent form submission
-      
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
-      
-      // Create user with email and password
+    // Get the register button element
+    var registerButton = document.getElementById('registerButton');
+
+    // Add an event listener to the register button
+    registerButton.addEventListener('click', function() {
+      // Get the user's email and password from the input fields
+      var email = document.getElementById('emailInput').value;
+      var password = document.getElementById('passwordInput').value;
+
+      // Register the user with Firebase
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function(userCredential) {
-          // Registration successful
-          var user = userCredential.user;
-          console.log("User registered:", user);
-          
-          // TODO: Handle post-registration actions (e.g., redirect to another page)
+          // User registered successfully
+          console.log('User registered:', userCredential.user);
+          alert('Registration successful!');
         })
         .catch(function(error) {
-          // Registration failed
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.error("Registration failed:", errorCode, errorMessage);
-          
-          // TODO: Handle registration error (e.g., display error message to the user)
+          // An error occurred during registration
+          console.error('Registration error:', error);
+          alert('Registration failed. Please try again.');
         });
     });
   </script>
