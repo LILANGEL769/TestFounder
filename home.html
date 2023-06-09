@@ -1,71 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <style>
-    body {
-      background-color: #212121;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      color: #ffffff;
-    }
-    
-    .header {
-      background-color: #333333;
-      padding: 20px;
-      text-align: center;
-    }
-    
-    .logo {
-      color: #ffffff;
-      font-size: 24px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    
-    .main-content {
-      max-width: 960px;
-      margin: 40px auto;
-      padding: 20px;
-      text-align: center;
-    }
-    
-    .main-content h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-    
-    .main-content p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-    
-    .cta-button {
-      display: inline-block;
-      background-color: #007bff;
-      color: #ffffff;
-      font-size: 20px;
-      font-weight: bold;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-    
-    .cta-button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
 </head>
+
 <body>
-  <div class="header">
-    <a class="logo" href="#">Your Game Name</a>
-  </div>
-  
-  <div class="main-content">
-    <h1>Welcome to Your Game</h1>
-    <p>A thrilling political simulation experience where you can run for office, make strategic decisions, and shape the future.</p>
-    <a class="cta-button" href="registration.html">Get Started</a>
-  </div>
+  <h1>Registration</h1>
+
+  <form id="registration-form">
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Register</button>
+  </form>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDwZu76qltW7Lg8nKCw7RpwdFywgH8PVSE",
+      authDomain: "founding-father-project.firebaseapp.com",
+      projectId: "founding-father-project",
+  storageBucket: "founding-father-project.appspot.com",
+  messagingSenderId: "637165861259",
+  appId: "1:637165861259:web:b6c422b1271be7f316d78e",
+  measurementId: "G-TP1W0FQXG7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const registrationForm = document.getElementById("registration-form");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    registrationForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      // Create the user with email and password
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Registration successful, you can redirect to a success page or perform additional actions
+          console.log("User registered successfully:", userCredential.user);
+        })
+        .catch((error) => {
+          // Registration failed, handle the error
+          console.log("Registration error:", error.message);
+        });
+    });
+  </script>
 </body>
+
 </html>
