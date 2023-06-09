@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Styles omitted for brevity */
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a class="logo" href="#">Your Game Name</a>
+  </div>
+  
+  <div class="main-content">
+    <h1>User Registration and Character Creation</h1>
+    <form action="registration.php" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <label for="character-name">Character Name:</label>
+      <input type="text" id="character-name" name="character-name" required>
+      <label for="party">Political Party:</label>
+      <select id="party" name="party" required>
+        <option value="democrat">Democrat</option>
+        <option value="republican">Republican</option>
+        <option value="party3">Party 3</option>
+        <option value="party4">Party 4</option>
+      </select>
+      <label for="state">State:</label>
+      <select id="state" name="state" required>
+        <script>
+          // Generate options for all 50 states, Puerto Rico, and Washington, D.C.
+          var states = [
+            "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+            "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+            "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+            "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
+            "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina",
+            "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
+            "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+            "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
+            "Puerto Rico", "Washington, D.C."
+          ];
+          
+          var stateSelect = document.getElementById("state");
+          states.forEach(function(state) {
+            var option = document.createElement("option");
+            option.value = state.toLowerCase().replace(/[\s,]/g, "-");
+            option.textContent = state;
+            stateSelect.appendChild(option);
+          });
+        </script>
+      </select>
+      <label for="character-picture">Character Picture:</label>
+      <input type="file" id="character-picture" name="character-picture" required>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</body>
+</html>
