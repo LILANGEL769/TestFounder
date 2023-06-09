@@ -1,27 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registration</title>
-</head>
-
-<body>
-  <h1>Registration</h1>
-
-  <form id="registration-form">
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <button type="submit">Register</button>
-  </form>
-
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script>
   <script>
     // Initialize Firebase
-    const firebaseConfig = {
+    var firebaseConfig = {
       apiKey: "AIzaSyDwZu76qltW7Lg8nKCw7RpwdFywgH8PVSE",
       authDomain: "founding-father-project.firebaseapp.com",
       projectId: "founding-father-project",
@@ -30,33 +16,48 @@
   appId: "1:637165861259:web:b6c422b1271be7f316d78e",
   measurementId: "G-TP1W0FQXG7"
     };
-
     firebase.initializeApp(firebaseConfig);
-
-    const registrationForm = document.getElementById("registration-form");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-
-    registrationForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const email = emailInput.value;
-      const password = passwordInput.value;
-
-      // Create the user with email and password
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Registration successful, you can redirect to a success page or perform additional actions
-          console.log("User registered successfully:", userCredential.user);
+  </script>
+</head>
+<body>
+  <h1>Registration</h1>
+  
+  <form id="registration-form">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+    
+    <button type="submit">Register</button>
+  </form>
+  
+  <script>
+    // Handle registration form submission
+    document.getElementById("registration-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+      
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      
+      // Create user with email and password
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(function(userCredential) {
+          // Registration successful
+          var user = userCredential.user;
+          console.log("User registered:", user);
+          
+          // TODO: Handle post-registration actions (e.g., redirect to another page)
         })
-        .catch((error) => {
-          // Registration failed, handle the error
-          console.log("Registration error:", error.message);
+        .catch(function(error) {
+          // Registration failed
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.error("Registration failed:", errorCode, errorMessage);
+          
+          // TODO: Handle registration error (e.g., display error message to the user)
         });
     });
   </script>
 </body>
-
 </html>
